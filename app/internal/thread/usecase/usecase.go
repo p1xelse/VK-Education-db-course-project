@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"github.com/labstack/gommon/log"
 	forumRep "github.com/p1xelse/VK_DB_course_project/app/internal/forum/repository"
 	threadRep "github.com/p1xelse/VK_DB_course_project/app/internal/thread/repository"
 	userRep "github.com/p1xelse/VK_DB_course_project/app/internal/user/repository"
@@ -23,6 +24,7 @@ type threadUsecase struct {
 }
 
 func (t threadUsecase) CreateThread(thread *models.Thread) error {
+	log.Info(thread.Created)
 	_, err := t.userRepo.GetUsersByNickname(thread.Author)
 	if err != nil {
 		return err

@@ -126,7 +126,7 @@ EXECUTE PROCEDURE update_count_posts();
 -- forums
 CREATE INDEX IF NOT EXISTS index_forums_user_nickname ON forums (user_nickname);
 
--- threads
+-- thread
 CREATE INDEX IF NOT EXISTS index_threads_author ON threads (author);
 CREATE INDEX IF NOT EXISTS index_threads_forum ON threads (forum);
 

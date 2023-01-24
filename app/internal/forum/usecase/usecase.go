@@ -18,7 +18,7 @@ type forumUsecase struct {
 }
 
 func (f forumUsecase) CreateForum(forum *models.Forum) error {
-	_, err := f.userRepo.GetUsersByNickname(forum.User)
+	user, err := f.userRepo.GetUsersByNickname(forum.User)
 	if err != nil {
 		return err
 	}
@@ -35,6 +35,7 @@ func (f forumUsecase) CreateForum(forum *models.Forum) error {
 		return err
 	}
 
+	forum.User = user.Nickname
 	err = f.forumRepo.CreateForum(forum)
 
 	if err != nil {

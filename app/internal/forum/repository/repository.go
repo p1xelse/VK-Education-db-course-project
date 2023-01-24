@@ -49,7 +49,7 @@ func (f forumRepository) GetForumUsers(slug string, limit int, since string, des
 }
 
 func (f forumRepository) CreateForum(forum *models.Forum) error {
-	tx := f.db.Create(forum)
+	tx := f.db.Omit("posts", "threads").Create(forum)
 
 	if tx.Error != nil {
 		return errors.Wrap(tx.Error, "database error (table: forums, method: CreateForum)")

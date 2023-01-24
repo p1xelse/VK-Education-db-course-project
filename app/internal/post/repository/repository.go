@@ -4,6 +4,7 @@ import (
 	"github.com/p1xelse/VK_DB_course_project/app/models"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type RepositoryI interface {
@@ -28,7 +29,7 @@ func (p postRepository) CreatePosts(posts []*models.Post) error {
 }
 
 func (p postRepository) UpdatePost(post *models.Post) error {
-	tx := p.db.Model(post).Updates(models.Post{Message: post.Message, IsEdited: true})
+	tx := p.db.Model(post).Clauses(clause.Returning{}).Updates(models.Post{Message: post.Message, IsEdited: true})
 	if tx.Error != nil {
 		return errors.Wrap(tx.Error, "database error (table posts)")
 	}

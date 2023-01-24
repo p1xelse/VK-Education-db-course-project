@@ -53,9 +53,9 @@ func (delivery *Delivery) UpdateUser(c echo.Context) error {
 		c.Logger().Error(err)
 		switch {
 		case errors.Is(err, models.ErrConflict):
-			return c.JSON(http.StatusConflict, models.ErrConflict.Error())
+			return echo.NewHTTPError(http.StatusConflict, models.ErrConflict.Error())
 		case errors.Is(err, models.ErrNotFound):
-			return c.JSON(http.StatusNotFound, models.ErrNotFound.Error())
+			return echo.NewHTTPError(http.StatusNotFound, models.ErrNotFound.Error())
 		default:
 			return echo.NewHTTPError(http.StatusInternalServerError, models.ErrInternalServerError)
 		}
@@ -72,7 +72,7 @@ func (delivery *Delivery) GetUser(c echo.Context) error {
 		c.Logger().Error(err)
 		switch {
 		case errors.Is(err, models.ErrNotFound):
-			return c.JSON(http.StatusNotFound, models.ErrNotFound.Error())
+			return echo.NewHTTPError(http.StatusNotFound, models.ErrNotFound.Error())
 		default:
 			return echo.NewHTTPError(http.StatusInternalServerError, models.ErrInternalServerError)
 		}

@@ -27,6 +27,8 @@ import (
 
 var cfgPostgres = postgres.Config{DSN: "host=localhost user=db_pg password=db_postgres database=db_forum port=5432"}
 
+//var cfgPostgres = postgres.Config{DSN: "host=localhost user=postgres password=postgres database=postgres port=8080"}
+
 func main() {
 	db, err := gorm.Open(postgres.New(cfgPostgres),
 		&gorm.Config{})

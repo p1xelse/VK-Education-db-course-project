@@ -30,7 +30,7 @@ func (delivery *Delivery) CreateForum(c echo.Context) error {
 		case errors.Is(err, models.ErrConflict):
 			return c.JSON(http.StatusConflict, forum)
 		case errors.Is(err, models.ErrNotFound):
-			return c.JSON(http.StatusNotFound, models.ErrNotFound.Error())
+			return echo.NewHTTPError(http.StatusNotFound, models.ErrNotFound.Error())
 		default:
 			return echo.NewHTTPError(http.StatusInternalServerError, models.ErrInternalServerError)
 		}
@@ -47,13 +47,13 @@ func (delivery *Delivery) GetForum(c echo.Context) error {
 		c.Logger().Error(err)
 		switch {
 		case errors.Is(err, models.ErrNotFound):
-			return c.JSON(http.StatusNotFound, models.ErrNotFound.Error())
+			return echo.NewHTTPError(http.StatusNotFound, models.ErrNotFound.Error())
 		default:
 			return echo.NewHTTPError(http.StatusInternalServerError, models.ErrInternalServerError)
 		}
 	}
 
-	return c.JSON(http.StatusCreated, forum)
+	return c.JSON(http.StatusOK, forum)
 }
 
 func (delivery *Delivery) GetForumUsers(c echo.Context) error {

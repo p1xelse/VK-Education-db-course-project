@@ -91,7 +91,7 @@ func (t threadRepository) GetThreadById(id uint64) (*models.Thread, error) {
 }
 
 func (t threadRepository) UpdateThread(thread *models.Thread) error {
-	tx := t.db.Model(thread).Updates(models.Thread{Message: thread.Message, Title: thread.Title})
+	tx := t.db.Model(thread).Clauses(clause.Returning{}).Updates(models.Thread{Message: thread.Message, Title: thread.Title})
 	if tx.Error != nil {
 		return errors.Wrap(tx.Error, "database error (table threads, method: UpdateThread)")
 	}

@@ -5,6 +5,7 @@ import (
 	"github.com/p1xelse/VK_DB_course_project/app/models"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type RepositoryI interface {
@@ -23,8 +24,7 @@ func (u userRepository) GetUsersByNickname(nickname string) (*models.User, error
 	user := models.User{}
 
 	tx := u.db.Where("nickname = ?", nickname).Take(&user)
-	log.Info("hellpo")
-	log.Info(user.Nickname)
+	log.Info("param: ", nickname, "value:", user.Nickname)
 	if errors.Is(tx.Error, gorm.ErrRecordNotFound) {
 		return nil, models.ErrNotFound
 	} else if tx.Error != nil {
@@ -69,7 +69,7 @@ func (u userRepository) GetUsersByNickNameOrEmail(email string, nickname string)
 }
 
 func (u userRepository) UpdateUser(user *models.User) error {
-	tx := u.db.Model(&models.User{Nickname: user.Nickname}).Updates(user)
+	tx := u.db.Model(user).Clauses(clause.Returning{}).Updates(user)
 
 	if tx.Error != nil {
 		return errors.Wrap(tx.Error, "database error (table: users, method: UpdateUser)")

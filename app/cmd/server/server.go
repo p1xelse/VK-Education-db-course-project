@@ -14,7 +14,7 @@ type Server struct {
 func NewServer(e *echo.Echo) *Server {
 	return &Server{
 		http.Server{
-			Addr:              ":18080",
+			Addr:              ":5000",
 			Handler:           e,
 			ReadTimeout:       30 * time.Second,
 			ReadHeaderTimeout: 30 * time.Second,
@@ -24,6 +24,6 @@ func NewServer(e *echo.Echo) *Server {
 }
 
 func (s *Server) Start() error {
-	log.Println("start serving in :8080")
+	log.Println("start serving in :5000")
 	return s.ListenAndServe()
 }
