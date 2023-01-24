@@ -14,7 +14,7 @@ type Server struct {
 func NewServer(e *echo.Echo) *Server {
 	return &Server{
 		http.Server{
-			Addr:              ":8080",
+			Addr:              ":18080",
 			Handler:           e,
 			ReadTimeout:       30 * time.Second,
 			ReadHeaderTimeout: 30 * time.Second,
