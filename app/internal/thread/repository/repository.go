@@ -67,7 +67,7 @@ func (t threadRepository) GetForumThreads(slug string, limit int, since string, 
 			return nil, errors.Wrap(tx.Error, "database error (table threads)")
 		}
 	} else {
-		tx := t.db.Limit(limit).Where("forum = ?", slug).Order("created desc").
+		tx := t.db.Limit(limit).Where("forum = ?", slug).Order(orderCondition).
 			Find(&threads)
 		if tx.Error != nil {
 			return nil, errors.Wrap(tx.Error, "database error (table threads)")
